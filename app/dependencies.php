@@ -1,0 +1,4 @@
+<?php
+
+$container = $app->getContainer();
+

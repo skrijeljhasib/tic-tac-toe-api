@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www
+    networks:
+      - public
+      - private
+    labels:
+      traefik.frontend.rule: "Host:tic-tac-toe-api.local"
+      traefik.backend: "tic-tac-toe-api"
+      traefik.frontend.entryPoints: "http"
+      traefik.protocol: "http"
+      traefik.port: "80"
+      traefik.docker.network: "api_public"
+
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - private
+    labels:
+      traefik.enable: "false"
+
+  traefik:
+    image: traefik
+    command: --web --docker --logLevel=DEBUG
+    ports:
+      - "8080:8080"
+    networks:
+      - public
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./traefik.toml:/traefik.toml"
+
+networks:
+  public:
+    driver: bridge
+  private:
+    driver: bridge
