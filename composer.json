@@ -22,6 +22,10 @@
     "monolog/monolog": "^1.17",
     "ocramius/generated-hydrator": "^2.2"
   },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.3",
+    "phpro/grumphp": "^0.14.3"
+  },
   "autoload": {
     "psr-4": {
       "TicTacToe\\": "app/src"

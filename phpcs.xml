@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="Tic Tac Toe API">
+    <description>PSR2 Coding standard</description>
+
+    <!-- display progress -->
+    <arg value="p"/>
+    <arg name="colors"/>
+
+    <!-- inherit rules from: -->
+    <rule ref="PSR2">
+        <exclude name="Generic.Files.LineLength"/>
+    </rule>
+
+    <file>app</file>
+
+</ruleset>
