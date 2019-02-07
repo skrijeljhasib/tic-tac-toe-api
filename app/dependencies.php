@@ -1,6 +1,8 @@
 <?php
 
 use GeneratedHydrator\Configuration;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use TicTacToe\Gateway\GameGateway;
 use TicTacToe\Model\Move;
 use TicTacToe\Model\Game;
@@ -9,6 +11,19 @@ use TicTacToe\Service\GameService;
 use TicTacToe\Validator\GameValidator;
 
 $container = $app->getContainer();
+
+$container['errorHandler'] = function ($container) {
+    return function (Request $request, Response $response, \Throwable $e) use ($container) {
+        $data = [
+            'status' => $e->getCode(),
+            'title' => $e->getMessage(),
+            'meta' => [
+                'requestBody' => $request->getParsedBody(),
+            ]
+        ];
+        return $response->withStatus($e->getCode())->withHeader('Content-Type', 'application/json')->withJson($data);
+    };
+};
 
 $container['redis'] = function ($container) {
     $redis = new Redis();
