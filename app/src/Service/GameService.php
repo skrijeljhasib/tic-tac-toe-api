@@ -3,7 +3,11 @@
 namespace TicTacToe\Service;
 
 use TicTacToe\Gateway\GameGateway;
+use TicTacToe\Helper\GameGatewayTrait;
+use TicTacToe\Helper\GameHydratorTrait;
+use TicTacToe\Helper\GameValidatorTrait;
 use TicTacToe\Model\Game;
+use TicTacToe\Validator\GameValidator;
 use Zend\Hydrator\HydratorInterface;
 
 /**
@@ -12,19 +16,19 @@ use Zend\Hydrator\HydratorInterface;
  */
 class GameService
 {
-    /** @var GameGateway $gameGateway */
-    protected $gameGateway;
-
-    /** @var HydratorInterface $gameHydrator */
-    protected $gameHydrator;
+    use GameGatewayTrait;
+    use GameValidatorTrait;
+    use GameHydratorTrait;
 
     /**
      * GameService constructor.
+     * @param GameValidator $gameValidator
      * @param GameGateway $gameGateway
      * @param HydratorInterface $gameHydrator
      */
-    public function __construct(GameGateway $gameGateway, HydratorInterface $gameHydrator)
+    public function __construct(GameValidator $gameValidator, GameGateway $gameGateway, HydratorInterface $gameHydrator)
     {
+        $this->setGameValidator($gameValidator);
         $this->setGameGateway($gameGateway);
         $this->setGameHydrator($gameHydrator);
     }
@@ -46,6 +50,8 @@ class GameService
      */
     public function newGame(Game $game): Game
     {
+        $this->getGameValidator()->validateNewGame($game);
+
         if (empty($game->getCreatedAt())) {
             $game->setCreatedAt(new \DateTime());
         }
@@ -55,43 +61,5 @@ class GameService
         };
 
         return $game;
-    }
-
-    /**
-     * @return GameGateway
-     */
-    public function getGameGateway(): GameGateway
-    {
-        return $this->gameGateway;
-    }
-
-    /**
-     * @param GameGateway $gameGateway
-     * @return GameService
-     */
-    public function setGameGateway(GameGateway $gameGateway): GameService
-    {
-        $this->gameGateway = $gameGateway;
-
-        return $this;
-    }
-
-    /**
-     * @return HydratorInterface
-     */
-    public function getGameHydrator(): HydratorInterface
-    {
-        return $this->gameHydrator;
-    }
-
-    /**
-     * @param HydratorInterface $gameHydrator
-     * @return GameService
-     */
-    public function setGameHydrator(HydratorInterface $gameHydrator): GameService
-    {
-        $this->gameHydrator = $gameHydrator;
-
-        return $this;
     }
 }
