@@ -6,3 +6,4 @@ parameters:
     succeeded: ~
   tasks:
     phpcs:
+    phpunit:
