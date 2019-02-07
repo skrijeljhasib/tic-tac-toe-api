@@ -1,0 +1,22 @@
+default:
+  autoload: [ '%paths.base%/tests/behavior' ]
+  suites:
+    db:
+      paths:    [ '%paths.base%/tests/behavior' ]
+      filters:
+      contexts:
+        - TicTacToe\BehaviorTest\ApiContext:
+            baseUrl: 'tic-tac-toe-api.local'
+  formatters:
+    pretty:
+    html:
+      output_path: '%paths.base%/tests/behavior/output'
+
+  extensions:
+    emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:
+      name: html
+      renderer: Twig
+      file_name: index
+      print_args: true
+      print_outp: true
+      loop_break: true
