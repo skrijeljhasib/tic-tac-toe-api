@@ -6,7 +6,7 @@ default:
       filters:
       contexts:
         - TicTacToe\BehaviorTest\ApiContext:
-            baseUrl: 'tic-tac-toe-api.local'
+            baseUrl: '127.0.0.1'
   formatters:
     pretty:
     html:
