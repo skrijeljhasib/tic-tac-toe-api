@@ -11,6 +11,9 @@
         <exclude name="Generic.Files.LineLength"/>
     </rule>
 
-    <file>app</file>
+    <exclude-pattern>*/tests/*\.(inc|css|js)</exclude-pattern>
 
+    <file>app</file>
+    <file>tests/behavior</file>
+    <file>tests/unit</file>
 </ruleset>
