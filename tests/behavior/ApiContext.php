@@ -20,8 +20,11 @@ use Slim\Http\Uri;
  */
 class ApiContext implements Context
 {
-    /** @var string $baseUrl */
-    protected $baseUrl = '';
+    /** @var string $host */
+    protected $host = '';
+
+    /** @var string $version */
+    protected $version = '';
 
     /** @var string $target */
     protected $target = '';
@@ -40,11 +43,13 @@ class ApiContext implements Context
 
     /**
      * ApiContext constructor.
-     * @param string $baseUrl
+     * @param string $host
+     * @param string $version
      */
-    public function __construct(string $baseUrl)
+    public function __construct(string $host, string $version)
     {
-        $this->baseUrl = $baseUrl;
+        $this->host = $host;
+        $this->version = $version;
     }
 
     /**
@@ -61,7 +66,7 @@ class ApiContext implements Context
 
         $request = new Request(
             $this->method,
-            new Uri('http', $this->baseUrl, 80, $this->target),
+            new Uri('http', $this->host, 80, sprintf('%s/%s', $this->version, $this->target)),
             $header,
             [],
             [],
