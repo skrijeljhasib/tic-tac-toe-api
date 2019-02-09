@@ -1,0 +1,168 @@
+<html lang="en">
+<head>
+    <title>Tic Tac Toe</title>
+    <meta charset="UTF-8">
+    <script type="application/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+
+        table .cell {
+            border: 2px solid #333;
+            height: 100px;
+            width: 100px;
+            text-align: center;
+            vertical-align: center;
+            font-size: 70px;
+            cursor: pointer;
+        }
+
+        table {
+            border-collapse: collapse;
+            position: absolute;
+            left: 50%;
+            margin-left: -155px;
+            top: 50px;
+        }
+
+        #template {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Tic Tac Toe</h1>
+
+<button id="newGame" onclick="newGame()">New Game</button>
+
+<p id="statusMessage"></p>
+
+<div id="ticTacToe"></div>
+
+<div id="template">
+    <table>
+        <tr>
+            <td class="cell" id="0"></td>
+            <td class="cell" id="1"></td>
+            <td class="cell" id="2"></td>
+        </tr>
+        <tr>
+            <td class="cell" id="3"></td>
+            <td class="cell" id="4"></td>
+            <td class="cell" id="5"></td>
+        </tr>
+        <tr>
+            <td class="cell" id="6"></td>
+            <td class="cell" id="7"></td>
+            <td class="cell" id="8"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
+
+<script type="application/javascript">
+
+    let game = {};
+
+    let players = {
+        me: 'X',
+        bot: 'O',
+    };
+
+    function newGame(playerOne = 'me', playerTwo = 'bot')
+    {
+        const orig = $('#template').find('table');
+
+        const cloned = $(orig).clone();
+
+        $('#ticTacToe').html(cloned);
+
+        $('#ticTacToe table .cell').on('click', handleCellClickEvent);
+
+        const newGameObject = {
+            id: "1",
+            playerOne: playerOne,
+            playerTwo: playerTwo,
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/v1/games',
+            async: false,
+            contentType: 'application/json',
+            accept: 'application/json',
+            data: JSON.stringify(newGameObject),
+        }).done(function (data) {
+            game = data;
+            $('#statusMessage').html('New game started');
+        }).fail(function (xhr) {
+            $('#statusMessage').html(xhr.responseJSON.title);
+        });
+    }
+
+    function handleCellClickEvent(event)
+    {
+        makeMove('1', 'me', event.target.id);
+
+        botMove();
+    }
+
+    function botMove()
+    {
+        if (game.playerToMove === 'bot') {
+            const board = game.board;
+
+            let boardPositionsNotSet = [];
+
+            for (var position in board) {
+                if (board[position] === null) {
+                    boardPositionsNotSet.push(position);
+                }
+            }
+
+            makeMove('1', 'bot', boardPositionsNotSet[Math.floor(Math.random() * boardPositionsNotSet.length)]);
+        }
+    }
+
+    function makeMove(gameId, player, boardPosition)
+    {
+        const moveObject = {
+            player: player,
+            gameId: gameId,
+            boardPosition: boardPosition,
+        };
+
+        $.ajax({
+            type: 'PATCH',
+            url: '/v1/games/' + gameId + '/makeMove',
+            async: false,
+            contentType: 'application/json',
+            accept: 'application/json',
+            data: JSON.stringify(moveObject),
+        }).done(function (data) {
+            $('#' + boardPosition).html(players[player]);
+        }).fail(function (xhr) {
+            $('#statusMessage').html(xhr.responseJSON.title);
+        }).always(function () {
+            reloadGame('1');
+        });
+    }
+
+    function reloadGame(id)
+    {
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: '/v1/games/' + id,
+            contentType: 'application/json',
+            accept: 'application/json',
+        }).done(function (data) {
+            game = data;
+        }).fail(function (xhr) {
+            $('#statusMessage').html(xhr.responseJSON.title);
+        });
+    }
+
+</script>

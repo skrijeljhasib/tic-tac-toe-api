@@ -76,6 +76,10 @@ class GameValidator
             throw new \Exception(sprintf('This game has finished. The winner is %s', $winner), 400);
         }
 
+        if (!in_array(null, $game->getBoard())) {
+            throw new \Exception('This game has finished. No winner', 400);
+        }
+
         if (!in_array($move->getPlayer(), [$game->getPlayerOne(), $game->getPlayerTwo()])) {
             throw new \Exception(sprintf('The player %s does not exist', $move->getPlayer()), 400);
         }

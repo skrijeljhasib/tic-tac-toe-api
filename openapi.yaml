@@ -46,7 +46,7 @@ paths:
         '405':
           description: 'Winner can not been set, Player to move can not been set'
   '/games/{id}/makeMove':
-    post:
+    patch:
       summary: 'Make a move on game'
       parameters:
         -
@@ -72,7 +72,7 @@ paths:
         '404':
           description: 'Can not find Game with id {id}'
         '400':
-          description: 'It is not your turn, The position must be between 0 and 8, The player does not exist, The board position is already set, There is already a winner for this game'
+          description: 'It is not your turn, The position must be between 0 and 8, The player does not exist, The board position is already set, There is already a winner for this game, No winner'
 components:
   schemas:
     Game:

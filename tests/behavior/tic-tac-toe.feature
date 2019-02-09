@@ -73,7 +73,7 @@ Feature: Tic Tac Toe
 
   Scenario Outline: Make moves on game
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {
@@ -97,7 +97,7 @@ Feature: Tic Tac Toe
 
   Scenario: Make move on a game with wrong playerName
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {
@@ -113,7 +113,7 @@ Feature: Tic Tac Toe
 
   Scenario: Make move on a game but it is not the turn of the player
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {
@@ -129,7 +129,7 @@ Feature: Tic Tac Toe
 
   Scenario: Make move on a game with a boardPosition which does not exist
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {
@@ -145,7 +145,7 @@ Feature: Tic Tac Toe
 
   Scenario: Make move on game when the boardPosition has already been set
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {
@@ -161,7 +161,7 @@ Feature: Tic Tac Toe
 
   Scenario: Finish the game with max
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {
@@ -176,7 +176,7 @@ Feature: Tic Tac Toe
 
   Scenario: The game has finished
     Given a request target url "games/1/makeMove"
-    And a request method "POST"
+    And a request method "PATCH"
     And I have the payload :
     """
     {

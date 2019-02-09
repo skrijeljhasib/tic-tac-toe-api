@@ -3,6 +3,7 @@
 use GeneratedHydrator\Configuration;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Slim\Views\PhpRenderer;
 use TicTacToe\Gateway\GameGateway;
 use TicTacToe\Model\Move;
 use TicTacToe\Model\Game;
@@ -11,6 +12,8 @@ use TicTacToe\Service\GameService;
 use TicTacToe\Validator\GameValidator;
 
 $container = $app->getContainer();
+
+$container['renderer'] = new PhpRenderer(__DIR__ . '/../front');
 
 $container['errorHandler'] = function ($container) {
     return function (Request $request, Response $response, \Throwable $e) use ($container) {

@@ -39,7 +39,7 @@ class GameValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider validateActionProvider
+     * @dataProvider validateMoveProvider
      * @param $game
      * @param $move
      * @param $exceptionClass
@@ -98,14 +98,21 @@ class GameValidatorTest extends TestCase
         ];
     }
 
-    public function validateActionProvider()
+    public function validateMoveProvider()
     {
         return [
-            'Game already finished' => [
+            'Game finished with a winner' => [
                 (new Game())->setWinner('Test1'),
                 (new Move()),
                 \Exception::class,
                 'This game has finished. The winner is Test1',
+                400
+            ],
+            'Game finished without a winner' => [
+                (new Game())->setBoard(['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'X']),
+                (new Move()),
+                \Exception::class,
+                'This game has finished. No winner',
                 400
             ],
             'Player does not exist' => [

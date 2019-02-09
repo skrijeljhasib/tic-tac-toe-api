@@ -7,7 +7,7 @@ use TicTacToe\Model\Move;
 use TicTacToe\Model\Game;
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    return '<h1>Tic Tac Toe</h1>';
+    return $this->renderer->render($response, 'Index.html', $args);
 });
 
 $app->get('/v1/games/{id}', function (Request $request, Response $response, array $args) {
@@ -78,12 +78,12 @@ $app->post('/v1/games', function (Request $request, Response $response, array $a
     return $response->withStatus(201)->withJson($result);
 });
 
-$app->post('/v1/games/{id}/makeMove', function (Request $request, Response $response, array $args) {
+$app->patch('/v1/games/{id}/makeMove', function (Request $request, Response $response, array $args) {
     $data = JsonDecoder::toArray($request->getBody()->getContents());
     $move = $this->moveHydrator->hydrate($data, new Move());
     $result = $this->moveHydrator->extract($this->moveService->makeMove($move));
     /**
-     * @OA\Post(
+     * @OA\Patch(
      *  path="/games/{id}/makeMove",
      *  summary="Make a move on game",
      *   @OA\Parameter(
@@ -116,7 +116,7 @@ $app->post('/v1/games/{id}/makeMove', function (Request $request, Response $resp
      *  ),
      *  @OA\Response(
      *     response=400,
-     *     description="It is not your turn, The position must be between 0 and 8, The player does not exist, The board position is already set, There is already a winner for this game"
+     *     description="It is not your turn, The position must be between 0 and 8, The player does not exist, The board position is already set, There is already a winner for this game, No winner"
      *  )
      * )
      */
