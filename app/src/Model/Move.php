@@ -5,31 +5,37 @@ namespace TicTacToe\Model;
 /**
  * Class Move
  * @package TicTacToe\Model
+ * @OA\Schema()
  */
 class Move
 {
     /**
      * @var string $id
+     * @OA\Property()
      */
     protected $id;
 
     /**
      * @var string $player
+     * @OA\Property()
      */
     protected $player;
 
     /**
      * @var string $gameId
+     * @OA\Property()
      */
     protected $gameId;
 
     /**
      * @var int $boardPosition
+     * @OA\Property()
      */
     protected $boardPosition;
 
     /**
      * @var \DateTime $createdAt
+     * @OA\Property(readOnly = true)
      */
     protected $createdAt;
 

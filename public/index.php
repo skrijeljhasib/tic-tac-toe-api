@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @OA\Info(
+ *     title="Tic Tac Toe API",
+ *     version="1.0",
+ *     @OA\Contact(
+ *        email="skrijelj-hasib@hotmail.com"
+ *    )
+ * )
+ */
+
 use Slim\App;
 
 require __DIR__ . '/../vendor/autoload.php';

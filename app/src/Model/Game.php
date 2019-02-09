@@ -5,31 +5,40 @@ namespace TicTacToe\Model;
 /**
  * Class Game
  * @package TicTacToe\Model
+ * @OA\Schema()
  */
 class Game
 {
     /**
      * @var string $id
+     * @OA\Property()
      */
     protected $id = '';
 
     /**
      * @var string $playerOne
+     * @OA\Property()
      */
     protected $playerOne = '';
 
     /**
      * @var string $playerTwo
+     * @OA\Property()
      */
     protected $playerTwo = '';
 
     /**
      * @var string $winner
+     * @OA\Property(readOnly = true)
      */
     protected $winner = null;
 
     /**
      * @var array $board
+     * @OA\Property(
+     *     readOnly = true,
+     *     @OA\Items()
+     * )
      */
     protected $board = [
         null,
@@ -45,11 +54,13 @@ class Game
 
     /**
      * @var string $playerToMove
+     * @OA\Property(readOnly = true)
      */
     protected $playerToMove = null;
 
     /**
      * @var \DateTime $createdAt
+     * @OA\Property(readOnly = true)
      */
     protected $createdAt = null;
 

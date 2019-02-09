@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  title: 'Tic Tac Toe API'
+  contact:
+    email: skrijelj-hasib@hotmail.com
+  version: '1.0'
+paths:
+  '/games/{id}':
+    get:
+      summary: 'Get a game by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of game to fetch'
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: 'Show game'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '404':
+          description: 'Can not find Game with id {id}'
+  /games:
+    post:
+      summary: 'Create a new game'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+      responses:
+        '201':
+          description: 'A new game was created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+        '400':
+          description: 'ID of the game has not been set, Player One has not been set, Player Two has not been set, The game board has not been correct initialized'
+        '405':
+          description: 'Winner can not been set, Player to move can not been set'
+  '/games/{id}/makeMove':
+    post:
+      summary: 'Make a move on game'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'ID of game to update'
+          required: true
+          schema:
+            type: string
+            format: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Move'
+      responses:
+        '200':
+          description: 'The board of the game was updated'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Move'
+        '404':
+          description: 'Can not find Game with id {id}'
+        '400':
+          description: 'It is not your turn, The position must be between 0 and 8, The player does not exist, The board position is already set, There is already a winner for this game'
+components:
+  schemas:
+    Game:
+      properties:
+        id:
+          description: $id
+          type: string
+        playerOne:
+          description: $playerOne
+          type: string
+        playerTwo:
+          description: $playerTwo
+          type: string
+        winner:
+          description: $winner
+          type: string
+          readOnly: true
+        board:
+          description: $board
+          type: array
+          items: {  }
+          readOnly: true
+        playerToMove:
+          description: $playerToMove
+          type: string
+          readOnly: true
+        createdAt:
+          description: $createdAt
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
+    Move:
+      properties:
+        id:
+          description: $id
+          type: string
+        player:
+          description: $player
+          type: string
+        gameId:
+          description: $gameId
+          type: string
+        boardPosition:
+          description: $boardPosition
+          type: integer
+        createdAt:
+          description: $createdAt
+          type: string
+          format: date-time
+          readOnly: true
+      type: object
