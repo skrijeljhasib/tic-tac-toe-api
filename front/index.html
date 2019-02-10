@@ -142,6 +142,7 @@
             accept: 'application/json',
             data: JSON.stringify(moveObject),
         }).done(function (data) {
+            $('#statusMessage').html('');
             $('#' + boardPosition).html(players[player]);
         }).fail(function (xhr) {
             $('#statusMessage').html(xhr.responseJSON.title);

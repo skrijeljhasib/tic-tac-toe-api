@@ -28,18 +28,15 @@ $container['errorHandler'] = function ($container) {
     };
 };
 
-$container['redis'] = function ($container) {
-    $redis = new Redis();
-    return $redis;
-};
+$container['redis'] = new Redis();
 
-$container['gameHydrator'] = function ($containter) {
+$container['gameHydrator'] = function () {
     $config = new Configuration(Game::class);
     $hydratorClass = $config->createFactory()->getHydratorClass();
     return new $hydratorClass;
 };
 
-$container['moveHydrator'] = function ($containter) {
+$container['moveHydrator'] = function () {
     $config = new Configuration(Move::class);
     $hydratorClass = $config->createFactory()->getHydratorClass();
     return new $hydratorClass;
@@ -52,9 +49,11 @@ $container['gameGateway'] = function ($container) {
     return $gameGateway;
 };
 
+$container['gameValidator'] = new GameValidator();
+
 $container['gameService'] = function ($container) {
     return new GameService(
-        new GameValidator(),
+        $container->get('gameValidator'),
         $container->get('gameGateway'),
         $container->get('gameHydrator')
     );
@@ -62,7 +61,7 @@ $container['gameService'] = function ($container) {
 
 $container['moveService'] = function ($container) {
     return new MoveService(
-        new GameValidator(),
+        $container->get('gameValidator'),
         $container->get('gameGateway'),
         $container->get('gameHydrator'),
         $container->get('moveHydrator')

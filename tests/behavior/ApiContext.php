@@ -3,7 +3,6 @@
 namespace TicTacToe\BehaviorTest;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -131,13 +130,12 @@ class ApiContext implements Context
     }
 
     /**
-     * @BeforeScenario
-     * @param BeforeScenarioScope $scope
+     * @Then I should receive a response where :attribute attribute has value :value
+     * @param $attribute
+     * @param $value
      */
-    public function before(BeforeScenarioScope $scope)
+    public function iShouldReceiveAResponseWhereAttributeHasValue($attribute, $value)
     {
-        $this->target = '';
-        $this->method = 'GET';
-        $this->response = null;
+        Assert::assertEquals($value, json_decode($this->response->getBody(), true)[$attribute]);
     }
 }

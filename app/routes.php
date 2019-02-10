@@ -7,7 +7,7 @@ use TicTacToe\Model\Move;
 use TicTacToe\Model\Game;
 
 $app->get('/', function (Request $request, Response $response, array $args) {
-    return $this->renderer->render($response, 'Index.html', $args);
+    return $this->renderer->render($response, 'index.html', $args);
 });
 
 $app->get('/v1/games/{id}', function (Request $request, Response $response, array $args) {

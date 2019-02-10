@@ -69,6 +69,8 @@ Feature: Tic Tac Toe
        """
     When I make request
     Then the response status code should be "201"
+    And I should receive a response where "playerOne" attribute has value "max"
+    And I should receive a response where "playerTwo" attribute has value "paul"
 
 
   Scenario Outline: Make moves on game
@@ -84,6 +86,9 @@ Feature: Tic Tac Toe
        """
     When I make request
     Then the response status code should be "200"
+    And I should receive a response where "gameId" attribute has value "1"
+    And I should receive a response where "player" attribute has value "<playerName>"
+    And I should receive a response where "boardPosition" attribute has value "<boardPosition>"
 
     Examples:
       | playerName | boardPosition |
@@ -172,6 +177,9 @@ Feature: Tic Tac Toe
        """
     When I make request
     Then the response status code should be "200"
+    And I should receive a response where "gameId" attribute has value "1"
+    And I should receive a response where "player" attribute has value "max"
+    And I should receive a response where "boardPosition" attribute has value "7"
 
 
   Scenario: The game has finished
