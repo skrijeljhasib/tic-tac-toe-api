@@ -20,10 +20,9 @@ class GameGatewayTest extends TestCase
 
     protected function setUp()
     {
-        $this->redis = $this->getMockBuilder(\Redis::class)->getMock();
+        $this->redis = $this->createMock(\Redis::class);
 
-        $this->gameGateway = new GameGateway();
-        $this->gameGateway->setRedis($this->redis);
+        $this->gameGateway = new GameGateway($this->redis);
     }
 
     public function testFind()
@@ -32,10 +31,6 @@ class GameGatewayTest extends TestCase
         $expectedGame['playerTwo'] = 'Test2';
 
         $json = json_encode($expectedGame);
-
-        $this->redis
-            ->expects($this->once())
-            ->method('connect');
 
         $this->redis
             ->expects($this->once())
@@ -65,10 +60,6 @@ class GameGatewayTest extends TestCase
 
         $this->redis
             ->expects($this->once())
-            ->method('connect');
-
-        $this->redis
-            ->expects($this->once())
             ->method('getKeys')
             ->with('1')
             ->willReturn(false);
@@ -80,10 +71,6 @@ class GameGatewayTest extends TestCase
     {
         $game['playerOne'] = 'Test1';
         $game['playerTwo'] = 'Test2';
-
-        $this->redis
-            ->expects($this->once())
-            ->method('connect');
 
         $this->redis
             ->expects($this->once())

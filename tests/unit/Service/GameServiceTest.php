@@ -27,8 +27,8 @@ class GameServiceTest extends TestCase
 
     protected function setUp()
     {
-        $this->gameValidator = $this->getMockBuilder(GameValidator::class)->getMock();
-        $this->gameGateway = $this->getMockBuilder(GameGateway::class)->getMock();
+        $this->gameValidator = $this->createMock(GameValidator::class);
+        $this->gameGateway = $this->createMock(GameGateway::class);
 
         $config = new Configuration(Game::class);
         $hydratorClass = $config->createFactory()->getHydratorClass();
