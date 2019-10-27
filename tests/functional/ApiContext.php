@@ -1,6 +1,6 @@
 <?php
 
-namespace TicTacToe\BehaviorTest;
+namespace TicTacToe\FunctionalTest;
 
 use Behat\Behat\Context\Context;
 use GuzzleHttp\Client;

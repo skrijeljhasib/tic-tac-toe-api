@@ -1,17 +1,17 @@
 default:
-  autoload: [ '%paths.base%/tests/behavior' ]
+  autoload: [ '%paths.base%/tests/functional' ]
   suites:
     default:
-      paths:    [ '%paths.base%/tests/behavior' ]
+      paths:    [ '%paths.base%/tests/functional' ]
       filters:
       contexts:
-        - TicTacToe\BehaviorTest\ApiContext:
+        - TicTacToe\FunctionalTest\ApiContext:
             host: '127.0.0.1'
             version: 'v1'
   formatters:
     pretty:
     html:
-      output_path: '%paths.base%/tests/behavior/output'
+      output_path: '%paths.base%/tests/functional/output'
 
   extensions:
     emuse\BehatHTMLFormatter\BehatHTMLFormatterExtension:

@@ -40,7 +40,8 @@
   "autoload-dev": {
     "psr-4": {
       "TicTacToe\\UnitTest\\": "tests/unit",
-      "TicTacToe\\BehaviorTest\\": "tests/behavior"
+      "TicTacToe\\IntegrationTest\\": "tests/integration",
+      "TicTacToe\\FunctionalTest\\": "tests/functional"
     }
   }
 }

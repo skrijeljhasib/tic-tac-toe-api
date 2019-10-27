@@ -1,4 +1,5 @@
 vendor/
 .idea/
 tests/unit/report/
-tests/behavior/output/
+tests/functional/output/
+tests/integration/output/
