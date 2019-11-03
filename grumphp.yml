@@ -6,5 +6,5 @@ parameters:
     succeeded: ~
   tasks:
     phpcs:
-    phpunit:
+    codeception:
     behat:

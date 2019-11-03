@@ -12,6 +12,7 @@
     </rule>
 
     <exclude-pattern>*/tests/*\.(inc|css|js)</exclude-pattern>
+    <exclude-pattern>*/tests/_support/</exclude-pattern>
 
     <file>app</file>
     <file>tests/behavior</file>
